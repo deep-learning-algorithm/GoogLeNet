@@ -63,6 +63,16 @@ $ pip install -r requirements.txt
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
+
+@misc{pascal-voc-2007,
+	author = "Everingham, M. and Van~Gool, L. and Williams, C. K. I. and Winn, J. and Zisserman, A.",
+	title = "The {PASCAL} {V}isual {O}bject {C}lasses {C}hallenge 2007 {(VOC2007)} {R}esults",
+	howpublished = "http://www.pascal-network.org/challenges/VOC/voc2007/workshop/index.html"}
+
+@misc{pascal-voc-2012,
+	author = "Everingham, M. and Van~Gool, L. and Williams, C. K. I. and Winn, J. and Zisserman, A.",
+	title = "The {PASCAL} {V}isual {O}bject {C}lasses {C}hallenge 2012 {(VOC2012)} {R}esults",
+	howpublished = "http://www.pascal-network.org/challenges/VOC/voc2012/workshop/index.html"}
 ```
 
 ## 参与贡献方式
