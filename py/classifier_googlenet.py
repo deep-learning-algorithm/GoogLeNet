@@ -18,7 +18,6 @@ import torchvision.transforms as transforms
 from torchvision.models import alexnet
 from torchvision.datasets import ImageFolder
 
-
 import utils.util as util
 import models.googlenet as googlenet
 
@@ -102,6 +101,8 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
     best_model_weights = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
+    loss_dict = {'train': [], 'test': []}
+    acc_dict = {'train': [], 'test': []}
     for epoch in range(num_epochs):
 
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
@@ -153,6 +154,8 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
 
             epoch_loss = running_loss / data_sizes[phase]
             epoch_acc = running_corrects.double() / data_sizes[phase]
+            loss_dict[phase].append(epoch_loss)
+            acc_dict[phase].append(epoch_acc)
 
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(
                 phase, epoch_loss, epoch_acc))
@@ -171,7 +174,7 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
 
     # load best model weights
     model.load_state_dict(best_model_weights)
-    return model
+    return model, loss_dict, acc_dict
 
 
 if __name__ == '__main__':
@@ -182,6 +185,8 @@ if __name__ == '__main__':
     print(data_loaders)
     print(data_sizes)
 
+    res_loss = dict()
+    res_acc = dict()
     for name in ['googlenet', 'alexnet']:
         if name == 'googlenet':
             model = googlenet.GoogLeNet(num_classes=20)
@@ -196,9 +201,16 @@ if __name__ == '__main__':
         lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
         util.check_dir('./data/models/')
-        best_model = train_model(data_loaders, data_sizes, name, model, criterion, optimizer, lr_schduler,
-                                 num_epochs=24, device=device)
+        best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
+                                                      criterion, optimizer, lr_schduler, num_epochs=24, device=device)
         # 保存最好的模型参数
         util.save_model(best_model, './data/models/best_{}.pth' % name)
-        print('train {} done' % name)
+
+        res_loss[name] = loss_dict
+        res_acc[name] = acc_dict
+
+        print('train %s done' % name)
         print()
+
+    util.save_png('loss', res_loss)
+    util.save_png('acc', res_acc)
