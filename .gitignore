@@ -3,3 +3,5 @@ py/.idea/
 py/data/
 
 py/models/__pycache__
+
+py/utils/__pycache__/
