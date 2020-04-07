@@ -21,6 +21,8 @@
 `GoogLeNet`是基于`Inception`架构的`CNN`模型，能够提高网络表达能力，实现很好的分类和检测性能。其前后实现了多个版本，相关论文如下：
 
 * [Going deeper with convolutions](https://arxiv.org/abs/1409.4842)
+* [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167)
+* [Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/abs/1512.00567)
 
 ## 安装
 
@@ -60,6 +62,24 @@ $ pip install -r requirements.txt
     author={Christian Szegedy and Wei Liu and Yangqing Jia and Pierre Sermanet and Scott Reed and Dragomir Anguelov and Dumitru Erhan and Vincent Vanhoucke and Andrew Rabinovich},
     year={2014},
     eprint={1409.4842},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{ioffe2015batch,
+    title={Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift},
+    author={Sergey Ioffe and Christian Szegedy},
+    year={2015},
+    eprint={1502.03167},
+    archivePrefix={arXiv},
+    primaryClass={cs.LG}
+}
+
+@misc{szegedy2015rethinking,
+    title={Rethinking the Inception Architecture for Computer Vision},
+    author={Christian Szegedy and Vincent Vanhoucke and Sergey Ioffe and Jonathon Shlens and Zbigniew Wojna},
+    year={2015},
+    eprint={1512.00567},
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
