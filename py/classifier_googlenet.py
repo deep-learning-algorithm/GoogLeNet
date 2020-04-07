@@ -204,7 +204,7 @@ if __name__ == '__main__':
         best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
                                                       criterion, optimizer, lr_schduler, num_epochs=100, device=device)
         # 保存最好的模型参数
-        util.save_model(best_model, './data/models/best_{}.pth' % name)
+        util.save_model(best_model, './data/models/best_%s.pth' % name)
 
         res_loss[name] = loss_dict
         res_acc[name] = acc_dict
