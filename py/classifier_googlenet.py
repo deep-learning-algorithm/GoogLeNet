@@ -127,10 +127,17 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
                 # forward
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs)
-                    # print(outputs.shape)
-                    _, preds = torch.max(outputs, 1)
-                    loss = criterion(outputs, labels)
+                    if model_name == 'googlenet' and phase == 'train':
+                        outputs, aux2, aux1 = model(inputs)
+
+                        # 仅使用最后一个分类器进行预测
+                        _, preds = torch.max(outputs, 1)
+                        loss = criterion(outputs, labels) + 0.3 * (criterion(aux2, labels) + criterion(aux1, labels))
+                    else:
+                        outputs = model(inputs)
+                        # print(outputs.shape)
+                        _, preds = torch.max(outputs, 1)
+                        loss = criterion(outputs, labels)
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
