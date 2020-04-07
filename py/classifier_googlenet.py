@@ -166,7 +166,7 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
                 best_model_weights = copy.deepcopy(model.state_dict())
 
         # 每训练一轮就保存
-        util.save_model(model, 'models/%s_%d.pth' % (model_name, epoch))
+        util.save_model(model, './data/models/%s_%d.pth' % (model_name, epoch))
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
@@ -198,11 +198,11 @@ if __name__ == '__main__':
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=1e-3)
-        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
+        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.9)
 
         util.check_dir('./data/models/')
         best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
-                                                      criterion, optimizer, lr_schduler, num_epochs=24, device=device)
+                                                      criterion, optimizer, lr_schduler, num_epochs=100, device=device)
         # 保存最好的模型参数
         util.save_model(best_model, './data/models/best_{}.pth' % name)
 
