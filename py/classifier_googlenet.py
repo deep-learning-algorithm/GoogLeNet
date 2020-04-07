@@ -10,7 +10,6 @@
 import time
 import copy
 import os
-import random
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -18,13 +17,15 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torchvision.models import alexnet
 from torchvision.datasets import ImageFolder
+
+
 import utils.util as util
 import models.googlenet as googlenet
 
 
 def load_data(data_root_dir):
     transform = transforms.Compose([
-        transforms.ToPILImage(),
+        # transforms.ToPILImage(),
         transforms.Resize(256),
         transforms.RandomCrop((224, 224)),
         transforms.RandomHorizontalFlip(),
@@ -34,9 +35,9 @@ def load_data(data_root_dir):
 
     data_loaders = {}
     data_sizes = {}
-    remain_negative_list = list()
     for name in ['train', 'test']:
         data_dir = os.path.join(data_root_dir, name + '_imgs')
+        # print(data_dir)
 
         data_set = ImageFolder(data_dir, transform=transform)
         data_loader = DataLoader(data_set, batch_size=128, shuffle=True, num_workers=8)
@@ -191,9 +192,7 @@ if __name__ == '__main__':
         model = model.to(device)
 
         criterion = nn.CrossEntropyLoss()
-        # 由于初始训练集数量很少，所以降低学习率
         optimizer = optim.Adam(model.parameters(), lr=1e-3)
-        # 共训练10轮，每隔4论减少一次学习率
         lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
         util.check_dir('./data/models/')
