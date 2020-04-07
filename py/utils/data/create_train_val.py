@@ -117,7 +117,6 @@ def save_cate(cate_list, image_dir, res_dir):
     # for name in image_name_list:
     #     image_path = os.path.join(image_dir, name)
     #     img = cv2.imread(image_path)
-    #     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     #
     #     image_dict[name.split('.')[0]] = img
 
@@ -133,7 +132,6 @@ def save_cate(cate_list, image_dir, res_dir):
 
             image_path = os.path.join(image_dir, img_name+'.jpg')
             img = cv2.imread(image_path)
-            img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
             rect_img = img[ymin:ymax, xmin:xmax]
             # rect_img = image_dict[img_name][ymin:ymax, xmin:xmax]
             img_path = os.path.join(cate_dir, '%s-%d-%d-%d-%d.png' % (img_name, xmin, ymin, xmax, ymax))
