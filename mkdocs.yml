@@ -30,3 +30,7 @@ extra_javascript:
 # 导航
 nav:
     - Home: index.md
+    - 训练日志:
+        - 'GoogLeNet': './log-googlenet.md'
+        - 'AlexNet vs. GoogLeNet': './log-alexnet-vs-googlenet.md'
+        - 'GoogLeNet_BN vs. GoogLeNet': './log-googlenet_bn-vs-googlenet.md'
