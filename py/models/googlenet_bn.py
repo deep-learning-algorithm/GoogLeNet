@@ -2,7 +2,7 @@
 
 """
 @date: 2020/4/8 上午9:35
-@file: googlenet-bn.py
+@file: googlenet_bn.py
 @author: zj
 @description: GoogLeNet-BN实现
 """
@@ -50,25 +50,25 @@ class GoogLeNet_BN(nn.Module):
 
         self.inception3a = inception_block(192, 64, 64, 64, 64, 96, 32, pool_type='avg')
         self.inception3b = inception_block(256, 64, 64, 96, 64, 96, 64, pool_type='avg')
-        self.inception3b = inception_block(256, 0, 128, 160, 64, 96, 0, pool_type='max')
+        self.inception3c = inception_block(320, 0, 128, 160, 64, 96, 0, pool_type='max')
         self.maxpool3 = nn.MaxPool2d(3, stride=2, ceil_mode=True)
 
         self.inception4a = inception_block(576, 224, 64, 96, 96, 128, 128, pool_type='avg')
         self.inception4b = inception_block(576, 192, 96, 128, 96, 128, 128, pool_type='avg')
         self.inception4c = inception_block(576, 160, 128, 160, 128, 160, 128, pool_type='avg')
-        self.inception4d = inception_block(576, 96, 128, 192, 160, 192, 128, pool_type='avg')
-        self.inception4e = inception_block(576, 0, 128, 192, 192, 256, 0, pool_type='max')
+        self.inception4d = inception_block(608, 96, 128, 192, 160, 192, 128, pool_type='avg')
+        self.inception4e = inception_block(608, 0, 128, 192, 192, 256, 0, pool_type='max')
         self.maxpool4 = nn.MaxPool2d(2, stride=2, ceil_mode=True)
 
-        self.inception5a = inception_block(1024, 352, 192, 320, 160, 224, 128, pool_type='avg')
+        self.inception5a = inception_block(1056, 352, 192, 320, 160, 224, 128, pool_type='avg')
         self.inception5b = inception_block(1024, 352, 192, 320, 192, 224, 128, pool_type='max')
 
         if aux_logits:
             # 辅助分类器
             # inception (4a) 输出 14x14x576
             self.aux1 = inception_aux_block(576, num_classes)
-            # inception (4d) 输出 14x14x576
-            self.aux2 = inception_aux_block(576, num_classes)
+            # inception (4d) 输出 14x14x608
+            self.aux2 = inception_aux_block(608, num_classes)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.dropout = nn.Dropout(0.2)
@@ -132,16 +132,16 @@ class GoogLeNet_BN(nn.Module):
         x = self.inception4b(x)
         # N x 576 x 14 x 14
         x = self.inception4c(x)
-        # N x 576 x 14 x 14
+        # N x 608 x 14 x 14
         x = self.inception4d(x)
-        # N x 576 x 14 x 14
+        # N x 608 x 14 x 14
         if aux_defined:
             aux2 = self.aux2(x)
         else:
             aux2 = None
 
         x = self.inception4e(x)
-        # N x 1024 x 14 x 14
+        # N x 1056 x 14 x 14
         x = self.maxpool4(x)
         # N x 1024 x 7 x 7
         x = self.inception5a(x)
@@ -190,8 +190,8 @@ class Inception(nn.Module):
 
         self.branch3 = nn.Sequential(
             conv_block(in_channels, dch3x3red, kernel_size=1, stride=1, padding=0),
-            conv_block(dch3x3red, dch3x3, kernel_size=5, stride=stride_num, padding=1),
-            conv_block(dch3x3, dch3x3, kernel_size=5, stride=stride_num, padding=1),
+            conv_block(dch3x3red, dch3x3, kernel_size=3, stride=stride_num, padding=1),
+            conv_block(dch3x3, dch3x3, kernel_size=3, stride=stride_num, padding=1),
         )
 
         if pool_proj != 0:
