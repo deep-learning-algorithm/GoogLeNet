@@ -187,7 +187,8 @@ if __name__ == '__main__':
 
     res_loss = dict()
     res_acc = dict()
-    for name in ['googlenet', 'alexnet']:
+    # for name in ['googlenet', 'alexnet']:
+    for name in ['googlenet']:
         if name == 'googlenet':
             model = googlenet.GoogLeNet(num_classes=20)
         else:
@@ -198,7 +199,8 @@ if __name__ == '__main__':
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(model.parameters(), lr=1e-3)
-        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.9)
+        # lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.9)
+        lr_schduler = optim.lr_scheduler.StepLR(optimizer, step_size=8, gamma=0.96)
 
         util.check_dir('./data/models/')
         best_model, loss_dict, acc_dict = train_model(data_loaders, data_sizes, name, model,
