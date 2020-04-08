@@ -4,7 +4,7 @@
 @date: 2020/4/7 下午9:07
 @file: classifier_googlenet.py
 @author: zj
-@description: 
+@description: 训练GoogLeNet分类器
 """
 
 import time
@@ -170,7 +170,7 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best val Acc: {:4f}'.format(best_acc))
+    print('Best test Acc: {:4f}'.format(best_acc))
 
     # load best model weights
     model.load_state_dict(best_model_weights)
