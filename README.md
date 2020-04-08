@@ -23,6 +23,7 @@
 * [Going deeper with convolutions](https://arxiv.org/abs/1409.4842)
 * [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167)
 * [Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/abs/1512.00567)
+* [Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning](https://arxiv.org/abs/1602.07261)
 
 ## 安装
 
@@ -80,6 +81,15 @@ $ pip install -r requirements.txt
     author={Christian Szegedy and Vincent Vanhoucke and Sergey Ioffe and Jonathon Shlens and Zbigniew Wojna},
     year={2015},
     eprint={1512.00567},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+
+@misc{szegedy2016inceptionv4,
+    title={Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning},
+    author={Christian Szegedy and Sergey Ioffe and Vincent Vanhoucke and Alex Alemi},
+    year={2016},
+    eprint={1602.07261},
     archivePrefix={arXiv},
     primaryClass={cs.CV}
 }
