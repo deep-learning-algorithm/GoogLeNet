@@ -45,28 +45,6 @@ def load_data(data_root_dir):
     return data_loaders, data_sizes
 
 
-def hinge_loss(outputs, labels):
-    """
-    折页损失计算
-    :param outputs: 大小为(N, num_classes)
-    :param labels: 大小为(N)
-    :return: 损失值
-    """
-    num_labels = len(labels)
-    corrects = outputs[range(num_labels), labels].unsqueeze(0).T
-
-    # 最大间隔
-    margin = 1.0
-    margins = outputs - corrects + margin
-    loss = torch.sum(torch.max(margins, 1)[0]) / len(labels)
-
-    # # 正则化强度
-    # reg = 1e-3
-    # loss += reg * torch.sum(weight ** 2)
-
-    return loss
-
-
 def add_hard_negatives(hard_negative_list, negative_list, add_negative_list):
     for item in hard_negative_list:
         if len(add_negative_list) == 0:
