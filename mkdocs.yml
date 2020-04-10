@@ -34,3 +34,5 @@ nav:
         - 'GoogLeNet': './log-googlenet.md'
         - 'AlexNet vs. GoogLeNet': './log-alexnet-vs-googlenet.md'
         - 'GoogLeNet_BN vs. GoogLeNet': './log-googlenet_bn-vs-googlenet.md'
+        - 'Inception_v2 vs. GoogLeNet_BN': './log-inception_v2-vs-googlenet_bn.md'
+        - 'Inception_v2 vs. Inception_v3': './log-inception_v2-vs-inception_v3.md'
