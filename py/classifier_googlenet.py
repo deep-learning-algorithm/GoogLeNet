@@ -45,33 +45,6 @@ def load_data(data_root_dir):
     return data_loaders, data_sizes
 
 
-def add_hard_negatives(hard_negative_list, negative_list, add_negative_list):
-    for item in hard_negative_list:
-        if len(add_negative_list) == 0:
-            # 第一次添加负样本
-            negative_list.append(item)
-            add_negative_list.append(list(item['rect']))
-        if list(item['rect']) not in add_negative_list:
-            negative_list.append(item)
-            add_negative_list.append(list(item['rect']))
-
-
-def get_hard_negatives(preds, cache_dicts):
-    fp_mask = preds == 1
-    tn_mask = preds == 0
-
-    fp_rects = cache_dicts['rect'][fp_mask].numpy()
-    fp_image_ids = cache_dicts['image_id'][fp_mask].numpy()
-
-    tn_rects = cache_dicts['rect'][tn_mask].numpy()
-    tn_image_ids = cache_dicts['image_id'][tn_mask].numpy()
-
-    hard_negative_list = [{'rect': fp_rects[idx], 'image_id': fp_image_ids[idx]} for idx in range(len(fp_rects))]
-    easy_negatie_list = [{'rect': tn_rects[idx], 'image_id': tn_image_ids[idx]} for idx in range(len(tn_rects))]
-
-    return hard_negative_list, easy_negatie_list
-
-
 def train_model(data_loaders, data_sizes, model_name, model, criterion, optimizer, lr_scheduler, num_epochs=25,
                 device=None):
     since = time.time()
