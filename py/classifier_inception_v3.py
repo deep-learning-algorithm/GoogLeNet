@@ -26,8 +26,8 @@ from models.label_smoothing_regularization import LabelSmoothRegularizatoin
 def load_data(data_root_dir):
     transform = transforms.Compose([
         # transforms.ToPILImage(),
-        transforms.Resize(256),
-        transforms.RandomCrop((224, 224)),
+        transforms.Resize(384),
+        transforms.RandomCrop((299, 299)),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))

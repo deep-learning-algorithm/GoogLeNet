@@ -27,8 +27,8 @@ from models.label_smoothing_regularization import LabelSmoothRegularizatoin
 def load_data(data_root_dir):
     transform = transforms.Compose([
         # transforms.ToPILImage(),
-        transforms.Resize(256),
-        transforms.RandomCrop((224, 224)),
+        transforms.Resize(384),
+        transforms.RandomCrop((299, 299)),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
@@ -41,7 +41,7 @@ def load_data(data_root_dir):
         # print(data_dir)
 
         data_set = ImageFolder(data_dir, transform=transform)
-        data_loader = DataLoader(data_set, batch_size=128, shuffle=True, num_workers=8)
+        data_loader = DataLoader(data_set, batch_size=96, shuffle=True, num_workers=8)
         data_loaders[name] = data_loader
         data_sizes[name] = len(data_set)
     return data_loaders, data_sizes
@@ -82,17 +82,10 @@ def train_model(data_loaders, data_sizes, model_name, model, criterion, optimize
                 # forward
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
-                    if phase == 'train':
-                        outputs, aux = model(inputs)
-
-                        # 仅使用最后一个分类器进行预测
-                        _, preds = torch.max(outputs, 1)
-                        loss = criterion(outputs, labels) + 0.3 * criterion(aux, labels)
-                    else:
-                        outputs = model(inputs)
-                        # print(outputs.shape)
-                        _, preds = torch.max(outputs, 1)
-                        loss = criterion(outputs, labels)
+                    outputs = model(inputs)
+                    # print(outputs.shape)
+                    _, preds = torch.max(outputs, 1)
+                    loss = criterion(outputs, labels)
 
                     # backward + optimize only if in training phase
                     if phase == 'train':

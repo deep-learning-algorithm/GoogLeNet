@@ -22,15 +22,25 @@ import models.googlenet_bn as googlenet_bn
 import models.inception_v2 as inception_v2
 
 
-def load_data(data_root_dir):
-    transform = transforms.Compose([
-        # transforms.ToPILImage(),
-        transforms.Resize(256),
-        transforms.RandomCrop((224, 224)),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])
+def load_data(data_root_dir, module_name):
+    if module_name == 'googlenet_bn':
+        transform = transforms.Compose([
+            # transforms.ToPILImage(),
+            transforms.Resize(256),
+            transforms.RandomCrop((224, 224)),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ])
+    else:
+        transform = transforms.Compose([
+            # transforms.ToPILImage(),
+            transforms.Resize(384),
+            transforms.RandomCrop((299, 299)),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ])
 
     data_loaders = {}
     data_sizes = {}
@@ -141,13 +151,13 @@ if __name__ == '__main__':
     device = util.get_device()
     # device = 'cpu'
 
-    data_loaders, data_sizes = load_data('./data/pascal-voc')
-    print(data_loaders)
-    print(data_sizes)
-
     res_loss = dict()
     res_acc = dict()
     for name in ['inception_v2', 'googlenet_bn']:
+        data_loaders, data_sizes = load_data('./data/pascal-voc', name)
+        print(data_loaders)
+        print(data_sizes)
+
         if name == 'googlenet_bn':
             model = googlenet_bn.GoogLeNet_BN(num_classes=20)
         else:
