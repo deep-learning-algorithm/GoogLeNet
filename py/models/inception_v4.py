@@ -16,14 +16,6 @@ class Inception_v4(nn.Module):
     __constants__ = ['transform_input']
 
     def __init__(self, num_classes=1000, transform_input=False, init_weights=True):
-        """
-        GoogLeNet实现
-        :param num_classes: 输出类别数
-        :param aux_logits: 是否使用辅助分类器
-        :param transform_input:
-        :param init_weights:
-        :param blocks:
-        """
         super(Inception_v4, self).__init__()
         self.transform_input = transform_input
 
