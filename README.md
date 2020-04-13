@@ -4,7 +4,15 @@
 
 > `GoogLeNet`算法实现
 
-实现并测试`GoogLeNet`
+`GoogLeNet`是基于`Inception`架构的`CNN`模型，通过在同一层中并行操作多个卷积网络，能够有效提高卷积表达能力，实现很好的分类性能。其前后实现了多个版本，相关论文如下：
+
+1. `GoogLeNet`
+2. `GoogLeNet_BN`
+3. `Inception_v2`
+4. `Inception_v3`
+5. `Inception_v4`
+6. `Inception_ResNet_v1`
+7. `Inception_ResNet_v2`
 
 ## 内容列表
 
@@ -18,8 +26,6 @@
 
 ## 背景
 
-`GoogLeNet`是基于`Inception`架构的`CNN`模型，能够提高网络表达能力，实现很好的分类和检测性能。其前后实现了多个版本，相关论文如下：
-
 * [Going deeper with convolutions](https://arxiv.org/abs/1409.4842)
 * [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167)
 * [Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/abs/1512.00567)
@@ -27,8 +33,17 @@
 
 ## 安装
 
+### 文档工具依赖
+
 ```
 # 文档工具依赖
+$ pip install -r requirements.txt
+```
+
+### python库依赖
+
+```
+$ cd py
 $ pip install -r requirements.txt
 ```
 
